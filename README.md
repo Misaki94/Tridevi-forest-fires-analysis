@@ -116,14 +116,10 @@ python forestfires_analysis.py
 
 ### 4. **Unduh Dataset yang Telah Diproses**:
 
-Setelah model dijalankan, dataset yang telah diproses akan disimpan sebagai file CSV dan bisa diunduh melalui **Google Colab**.
+Setelah model dijalankan, dataset yang telah diproses akan disimpan sebagai file CSV dan bisa diunduh melalui https://drive.google.com/file/d/1gV94vGcfF7K-cEIN6o5fVIk2w7fWhMOq/view?usp=sharing
 
 ### 5. **Lihat Hasil**:
 
 Output akan mencakup metrik evaluasi (MAE dan RMSE) untuk kedua model, dan visualisasi akan menunjukkan perbandingan antara nilai aktual dan prediksi.
-
-## Lisensi
-
-Proyek ini dilisensikan di bawah **MIT License** - lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
 
 
