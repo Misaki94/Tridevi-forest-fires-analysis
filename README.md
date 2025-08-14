@@ -1,77 +1,125 @@
-# Analisis Kebakaran Hutan
-
-Proyek ini bertujuan untuk menganalisis dataset kebakaran hutan di Portugal dan membangun model untuk memprediksi luas area yang terbakar (variabel target). Dataset yang digunakan mengandung berbagai fitur meteorologi seperti suhu, kelembapan, kecepatan angin, serta indeks kebakaran yang dapat digunakan untuk memprediksi luas area yang terbakar.
-
-## Deskripsi Dataset
-
-Dataset **Forest Fires** berasal dari [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/162/forest+fires). Dataset ini berisi 517 entri dan 13 fitur, meliputi:
-
-- **FFMC (Fine Fuel Moisture Code)**: Kode kelembapan bahan bakar halus.
-- **DMC (Duff Moisture Code)**: Kode kelembapan bahan bakar kasar.
-- **DC (Drought Code)**: Kode kekeringan.
-- **ISI (Initial Spread Index)**: Indeks penyebaran awal.
-- **temp (Temperature)**: Suhu udara.
-- **RH (Relative Humidity)**: Kelembapan relatif.
-- **wind (Wind Speed)**: Kecepatan angin.
-- **rain (Rainfall)**: Curah hujan.
-- **month (Month)**: Bulan kebakaran terjadi.
-- **day (Day)**: Hari kebakaran terjadi.
-- **area (Area burned in ha)**: Luas area yang terbakar (variabel target yang ingin diprediksi).
+# Analisis Prediksi Kebakaran Hutan
 
 ## Tujuan Proyek
 
-Tujuan utama dari proyek ini adalah untuk membangun model prediksi untuk luas area yang terbakar berdasarkan data meteorologi dan indeks kebakaran. Beberapa algoritma yang digunakan dalam proyek ini adalah:
+Tujuan utama dari proyek ini adalah untuk memprediksi **luas area yang terbakar** pada kebakaran hutan berdasarkan berbagai faktor meteorologi seperti suhu, kelembapan, kecepatan angin, dan indeks kebakaran. Proyek ini menggunakan model pembelajaran mesin untuk memperkirakan luas area yang terbakar, yang merupakan variabel target dalam dataset. Ini dapat digunakan untuk membantu mitigasi kebakaran hutan dengan memprediksi kemungkinan kerusakan berdasarkan kondisi lingkungan.
 
-- **Support Vector Regression (SVR)**: Digunakan untuk menangani data yang memiliki hubungan non-linear antara fitur dan target.
-- **Random Forest Regressor**: Digunakan untuk menangani data yang lebih besar dan lebih kompleks, serta mengurangi risiko overfitting.
-
-## Algoritma yang Digunakan
+### Algoritma yang Digunakan:
 
 1. **Support Vector Regression (SVR)**:
-   - **SVR** adalah algoritma regresi yang berbasis pada konsep **Support Vector Machines (SVM)**. Algoritma ini digunakan ketika data memiliki hubungan non-linear yang sulit untuk dimodelkan menggunakan teknik regresi linear. SVR cocok digunakan karena kemampuan untuk menangani kompleksitas hubungan antar fitur dan target variabel.
+
+   * **SVR** digunakan untuk memprediksi nilai kontinu (dalam hal ini, luas area yang terbakar oleh kebakaran hutan). SVR dipilih karena dapat menangani hubungan non-linear antara fitur dan target.
+   * SVR bekerja dengan mencari hyperplane yang memisahkan data secara optimal di ruang fitur. SVR sangat efektif dalam menangani ruang fitur dengan dimensi tinggi, yang membuatnya ideal untuk masalah regresi semacam ini.
 
 2. **Random Forest Regressor**:
-   - **Random Forest** adalah model ensemble yang membangun beberapa pohon keputusan dan menggabungkan hasil dari semua pohon tersebut untuk membuat prediksi. Model ini digunakan untuk menangani masalah dengan banyak fitur dan dapat mengatasi hubungan non-linear dengan baik. Selain itu, Random Forest membantu mengurangi masalah **overfitting** yang biasa terjadi pada model pohon keputusan tunggal.
+
+   * **Random Forest Regressor** adalah metode pembelajaran ensemble yang membangun banyak pohon keputusan dan menggabungkan prediksi dari pohon-pohon tersebut. Kekuatan Random Forest terletak pada kemampuannya untuk menangani dataset yang kompleks dan besar, serta lebih tahan terhadap overfitting dibandingkan pohon keputusan tunggal.
+   * Algoritma Random Forest sangat ideal untuk memprediksi luas area yang terbakar karena dapat menangkap interaksi kompleks antara fitur-fitur serta lebih tahan terhadap overfitting.
+
+3. **Tuning Hyperparameter untuk Random Forest**:
+
+   * **GridSearchCV** digunakan untuk menyetel hyperparameter model Random Forest agar dapat mengoptimalkan parameter seperti jumlah pohon (`n_estimators`), kedalaman maksimum (`max_depth`), dan lainnya. Tuning hyperparameter ini akan meningkatkan kinerja model dengan menemukan konfigurasi terbaik.
 
 ## Metodologi
 
-1. **Eksplorasi Data**:
-   - Dataset dimuat dan diperiksa untuk struktur dasar menggunakan fungsi **`df.info()`** dan **`df.describe()`**.
-   - Histogram dari variabel target (**area**) divisualisasikan untuk memahami distribusinya.
+### 1. **Eksplorasi Data (EDA)**:
 
-2. **Pra-pemrosesan Data**:
-   - **Transformasi Logaritma** diterapkan pada variabel target **area** yang sangat skewed untuk membuat distribusi data lebih normal.
-   - **Fitur Kategorikal ke Numerik**: Variabel **month** dan **day** yang berupa kategori dikonversi menjadi numerik untuk memudahkan pemodelan.
-   - **Penskalaan Fitur**: Fitur numerik seperti **FFMC**, **DMC**, **DC**, **ISI**, **temp**, **RH**, **wind**, dan **rain** distandarisasi menggunakan **StandardScaler**.
+* Dataset dimuat dan struktur dasar dataset diperiksa menggunakan `df.info()` dan `df.describe()`.
+* Histogram dari variabel target **`area`** divisualisasikan untuk memahami distribusinya.
 
-3. **Pelatihan Model**:
-   - **SVR** dan **Random Forest Regressor** dilatih dengan dataset yang sudah diproses.
-   - Hyperparameter tuning untuk **Random Forest** dilakukan menggunakan **GridSearchCV** untuk mengoptimalkan parameter seperti jumlah pohon (`n_estimators`), kedalaman pohon (`max_depth`), dan lainnya.
+### 2. **Pra-pemrosesan Data**:
 
-4. **Evaluasi Model**:
-   - Kedua model (**SVR** dan **Random Forest**) dievaluasi menggunakan **Mean Absolute Error (MAE)** dan **Root Mean Squared Error (RMSE)** untuk membandingkan akurasi dan kesalahan prediksi dari masing-masing model.
-   - **Random Forest** dituning dengan **GridSearchCV** untuk menemukan hyperparameter terbaik dan dievaluasi kembali pada data uji.
+* **Transformasi Logaritma** diterapkan pada variabel target **`area`** untuk mengurangi skewness dan menormalkan distribusi.
+* **Fitur Kategorikal (Bulan dan Hari)** dikonversi menjadi nilai numerik. **`month`** dipetakan dari nama bulan (misalnya, Jan, Feb) ke angka (1-12), dan **`day`** dipetakan dari nama hari (misalnya, Sen, Sel) ke angka (0-6).
+* **Penskalaan Fitur** dilakukan pada fitur numerik seperti **`FFMC`**, **`DMC`**, **`DC`**, **`ISI`**, **`temp`**, **`RH`**, **`wind`**, dan **`rain`** menggunakan **StandardScaler** agar semua fitur berada dalam skala yang sama, yang penting untuk model seperti **SVR**.
 
-5. **Visualisasi**:
-   - Visualisasi menggunakan **scatter plot** untuk membandingkan nilai aktual dan prediksi dari kedua model (**SVR** dan **Random Forest Regressor**).
+### 3. **Pelatihan Model**:
+
+* **Support Vector Regression (SVR)** dan **Random Forest Regressor** dilatih menggunakan data yang telah diproses.
+* **GridSearchCV** digunakan untuk tuning hyperparameter model Random Forest, memungkinkan kita untuk menemukan parameter terbaik seperti **`n_estimators`**, **`max_depth`**, **`min_samples_split`**, dll.
+
+### 4. **Evaluasi Model**:
+
+* Kedua model (**SVR** dan **Random Forest**) dievaluasi menggunakan dua metrik utama:
+
+  * **Mean Absolute Error (MAE)**: Mengukur rata-rata perbedaan absolut antara nilai prediksi dan nilai aktual.
+  * **Root Mean Squared Error (RMSE)**: Mengukur akar kuadrat dari rata-rata kuadrat perbedaan antara nilai prediksi dan nilai aktual, memberikan lebih banyak bobot pada kesalahan yang lebih besar.
+
+* Model Random Forest disesuaikan menggunakan **GridSearchCV** untuk menemukan kombinasi hyperparameter terbaik, dan kinerjanya dievaluasi lagi pada data uji.
+
+### 5. **Perbandingan Model**:
+
+* Nilai aktual dan prediksi untuk kedua model dibandingkan menggunakan **scatter plot** untuk memvisualisasikan seberapa baik model-model tersebut bekerja pada data yang belum pernah dilihat sebelumnya.
+
+### 6. **Menyimpan dan Mengunduh Data yang Telah Diproses**:
+
+* Dataset yang telah diproses disimpan sebagai **CSV** dan disediakan untuk diunduh menggunakan **Google Colab**.
 
 ## Hasil yang Diharapkan
 
-- **Akurasi Prediksi**: Diharapkan model **SVR** dan **Random Forest Regressor** dapat memprediksi luas area yang terbakar dengan akurasi yang tinggi.
-- **Pemahaman tentang Faktor-faktor Meteorologi**: Proyek ini juga bertujuan untuk memberikan wawasan lebih dalam tentang bagaimana faktor-faktor meteorologi mempengaruhi kebakaran hutan.
-- **Aplikasi Dunia Nyata**: Model yang dikembangkan dapat digunakan oleh pihak berwenang untuk merencanakan pencegahan kebakaran dan mengalokasikan sumber daya secara lebih efektif.
+1. **Akurasi Prediksi**: Diharapkan model (**SVR** dan **Random Forest**) dapat memprediksi luas area yang terbakar dengan akurasi tinggi, dengan nilai MAE dan RMSE yang rendah, terutama setelah tuning hyperparameter.
+2. **Pemahaman Faktor Meteorologi**: Proyek ini bertujuan untuk memberikan wawasan tentang bagaimana faktor meteorologi mempengaruhi kebakaran hutan dan seberapa besar kerusakan yang ditimbulkan.
+3. **Aplikasi Dunia Nyata**: Model yang dikembangkan dapat digunakan oleh pihak berwenang untuk memprediksi kerusakan kebakaran hutan dan mengalokasikan sumber daya dengan lebih efektif.
 
-## Tantangan yang Dihadapi
+## Menjalankan Proyek
 
-- **Data yang Tidak Seimbang**: Dataset cenderung memiliki lebih banyak kebakaran kecil dengan area yang terbakar lebih sedikit. Ini dapat memengaruhi hasil model. Penyeimbangan data atau teknik khusus bisa digunakan untuk mengatasi ini.
-- **Overfitting**: Meskipun sudah dioptimalkan, beberapa model (terutama yang tidak di-tune) dapat mengalami overfitting. Penggunaan **Random Forest** dengan **GridSearchCV** membantu mengurangi hal ini.
+### 1. **Clone Repositori**:
 
-## Kesimpulan
+Anda dapat meng-clone atau mengunduh repositori ini dengan menjalankan perintah berikut:
 
-Dengan menggunakan **Support Vector Regression** dan **Random Forest Regressor**, proyek ini bertujuan untuk memprediksi luas area kebakaran hutan secara akurat. Kedua model ini memiliki keunggulan dalam menangani hubungan non-linear antar fitur dan target variabel, serta dalam mengatasi data yang lebih kompleks. Tuning hyperparameter pada **Random Forest** lebih meningkatkan performa model.
+```bash
+git clone https://github.com/username/forest-fire-analysis.git
+```
 
-## Cara Menjalankan
+### 2. **Install Dependencies**:
 
-1. **Clone Repositori**:
-   ```bash
-   git clone https://github.com/yourusername/forest-fire-analysis.git
+Untuk menginstal pustaka yang diperlukan untuk menjalankan proyek, gunakan perintah berikut:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. **Jalankan Skrip**:
+
+Anda bisa menjalankan skrip Python yang memproses data, melatih model, dan mengevaluasi hasilnya dengan perintah berikut:
+
+```bash
+python forestfires_analysis.py
+```
+
+### 4. **Unduh Dataset yang Telah Diproses**:
+
+Setelah model dijalankan, dataset yang telah diproses akan disimpan sebagai file CSV dan bisa diunduh melalui **Google Colab**.
+
+### 5. **Lihat Hasil**:
+
+Output akan mencakup metrik evaluasi (MAE dan RMSE) untuk kedua model, dan visualisasi akan menunjukkan perbandingan antara nilai aktual dan prediksi.
+
+## Lisensi
+
+Proyek ini dilisensikan di bawah **MIT License** - lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
+
+---
+
+### **Penjelasan README**:
+
+1. **Tujuan Proyek**:
+
+   * README ini menjelaskan tujuan proyek untuk memprediksi **luas area yang terbakar** pada kebakaran hutan menggunakan model pembelajaran mesin (SVR dan Random Forest Regressor).
+   * Menjelaskan pemilihan algoritma yang sesuai berdasarkan kemampuan mereka untuk menangani masalah kompleksitas dan skala yang besar.
+
+2. **Algoritma yang Digunakan**:
+
+   * **SVR** dipilih karena kemampuannya untuk menangani hubungan non-linear antara fitur dan variabel target.
+   * **Random Forest Regressor** digunakan karena dapat menangkap interaksi fitur yang lebih kompleks dan lebih tahan terhadap overfitting.
+   * **GridSearchCV** digunakan untuk tuning hyperparameter **Random Forest** agar model bekerja dengan lebih baik.
+
+3. **Metodologi**:
+
+   * Penjelasan yang mendalam tentang setiap langkah, mulai dari eksplorasi data, pra-pemrosesan, pelatihan model, evaluasi model, hingga visualisasi dan penyimpanan data yang telah diproses.
+
+4. **Menjalankan Proyek**:
+
+   * Instruksi tentang cara meng-clone repositori, menginstal pustaka yang diperlukan, dan menjalankan proyek di lingkungan lokal atau **Google Colab**.
+
+README ini memberikan penjelasan komprehensif dan jelas tentang proyek, tujuan, algoritma, serta cara menjalankannya. Jika Anda memerlukan penyesuaian lebih lanjut atau memiliki pertanyaan lainnya, beri tahu saya!
