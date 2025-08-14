@@ -61,6 +61,33 @@ Tujuan utama dari proyek ini adalah untuk memprediksi **luas area yang terbakar*
 2. **Pemahaman Faktor Meteorologi**: Proyek ini bertujuan untuk memberikan wawasan tentang bagaimana faktor meteorologi mempengaruhi kebakaran hutan dan seberapa besar kerusakan yang ditimbulkan.
 3. **Aplikasi Dunia Nyata**: Model yang dikembangkan dapat digunakan oleh pihak berwenang untuk memprediksi kerusakan kebakaran hutan dan mengalokasikan sumber daya dengan lebih efektif.
 
+### **Analisis Hasil Output:**
+
+#### **1. Support Vector Regression (SVR)** - Plot Kiri:
+
+* **Observasi Scatter Plot**:
+
+  * Terlihat ada **konsentrasi signifikan** dari **prediksi** yang terkumpul di sekitar nilai rendah dari **nilai aktual** (dekat dengan 0).
+  * Sebagian besar prediksi berada di bawah 1, dengan banyak titik terkonsentrasi antara 0 dan 1, yang menunjukkan bahwa **SVR kesulitan** memprediksi nilai yang lebih tinggi dari variabel target, **luas area yang terbakar**.
+  * Ada **kekurangan kecocokan** untuk nilai aktual yang lebih besar (sekitar 2 atau lebih), karena **prediksi untuk nilai aktual yang lebih besar cenderung tetap rendah**, yang menunjukkan bahwa **model SVR tidak performa baik** pada nilai luas area yang lebih besar.
+  * **Outliers** terlihat di scatter plot (beberapa titik dengan prediksi lebih tinggi dari 2), tetapi sebagian besar prediksi terlihat terkonsentrasi pada rentang yang lebih rendah.
+
+* **Implikasi**:
+
+  * **SVR memiliki keterbatasan** dalam memprediksi nilai yang lebih besar (seperti area kebakaran yang lebih besar) dan cenderung **under-predict** luas area yang terbakar. Model ini bisa mendapatkan manfaat dari penyesuaian lebih lanjut atau penggunaan kernel yang berbeda untuk meningkatkan kinerjanya, terutama untuk nilai yang lebih tinggi.
+
+#### **2. Random Forest Regressor (Tuned)** - Plot Kanan:
+
+* **Observasi Scatter Plot**:
+
+  * **Random Forest Regressor** (setelah tuning) menunjukkan **hubungan yang lebih jelas** antara **nilai aktual** dan **prediksi**.
+  * Berbeda dengan SVR, **prediksi lebih tersebar** dan lebih selaras dengan nilai aktual, mencakup rentang yang lebih luas. **Prediksi untuk nilai aktual kecil maupun besar** lebih dekat dengan garis diagonal (menunjukkan bahwa nilai aktual = prediksi).
+  * Ada **fit yang lebih kuat** pada plot, yang menunjukkan bahwa **model Random Forest menangani data dengan lebih baik**, terutama pada nilai yang lebih tinggi, di mana model membuat prediksi yang lebih akurat untuk area kebakaran yang lebih besar (nilai mendekati 2 atau lebih).
+
+* **Implikasi**:
+
+  * **Random Forest Regressor** lebih **sesuai untuk masalah ini**, terutama setelah **tuning hyperparameter**. Model ini dapat menangkap hubungan yang kompleks dan menangani nilai kecil dan besar dengan lebih efektif dibandingkan dengan **SVR**.
+
 ## Menjalankan Proyek
 
 ### 1. **Clone Repositori**:
@@ -99,27 +126,4 @@ Output akan mencakup metrik evaluasi (MAE dan RMSE) untuk kedua model, dan visua
 
 Proyek ini dilisensikan di bawah **MIT License** - lihat file [LICENSE](LICENSE) untuk detail lebih lanjut.
 
----
 
-### **Penjelasan README**:
-
-1. **Tujuan Proyek**:
-
-   * README ini menjelaskan tujuan proyek untuk memprediksi **luas area yang terbakar** pada kebakaran hutan menggunakan model pembelajaran mesin (SVR dan Random Forest Regressor).
-   * Menjelaskan pemilihan algoritma yang sesuai berdasarkan kemampuan mereka untuk menangani masalah kompleksitas dan skala yang besar.
-
-2. **Algoritma yang Digunakan**:
-
-   * **SVR** dipilih karena kemampuannya untuk menangani hubungan non-linear antara fitur dan variabel target.
-   * **Random Forest Regressor** digunakan karena dapat menangkap interaksi fitur yang lebih kompleks dan lebih tahan terhadap overfitting.
-   * **GridSearchCV** digunakan untuk tuning hyperparameter **Random Forest** agar model bekerja dengan lebih baik.
-
-3. **Metodologi**:
-
-   * Penjelasan yang mendalam tentang setiap langkah, mulai dari eksplorasi data, pra-pemrosesan, pelatihan model, evaluasi model, hingga visualisasi dan penyimpanan data yang telah diproses.
-
-4. **Menjalankan Proyek**:
-
-   * Instruksi tentang cara meng-clone repositori, menginstal pustaka yang diperlukan, dan menjalankan proyek di lingkungan lokal atau **Google Colab**.
-
-README ini memberikan penjelasan komprehensif dan jelas tentang proyek, tujuan, algoritma, serta cara menjalankannya. Jika Anda memerlukan penyesuaian lebih lanjut atau memiliki pertanyaan lainnya, beri tahu saya!
