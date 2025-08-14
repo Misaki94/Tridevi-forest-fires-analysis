@@ -116,7 +116,7 @@ https://drive.google.com/file/d/1gV94vGcfF7K-cEIN6o5fVIk2w7fWhMOq/view?usp=shari
 
 ### 4. Unduh Dataset yang Telah Diproses:
 
-Setelah model dijalankan, dataset yang telah diproses akan disimpan sebagai file CSV dan bisa diunduh melalui https://drive.google.com/file/d/1gV94vGcfF7K-cEIN6o5fVIk2w7fWhMOq/view?usp=sharing
+Setelah model dijalankan, dataset yang telah diproses akan disimpan sebagai file CSV dan bisa diunduh melalui [https://drive.google.com/file/d/1gV94vGcfF7K-cEIN6o5fVIk2w7fWhMOq/view?usp=sharing](https://drive.google.com/drive/folders/1AJCG0m2hlIcwNcUJEFery2AlxGmez6Gh?usp=sharing)
 
 ### 5. Lihat Hasil:
 
