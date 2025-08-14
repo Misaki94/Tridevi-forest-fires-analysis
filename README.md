@@ -95,8 +95,7 @@ Tujuan utama dari proyek ini adalah untuk memprediksi luas area yang terbakar pa
 Anda dapat meng-clone atau mengunduh repositori ini dengan menjalankan perintah berikut:
 
 ```bash
-git clone https://github.com/Misaki94/Tridevi-forest-fires-analysis
-.git
+git clone https://github.com/Misaki94/Tridevi-forest-fires-analysis.git
 ```
 
 ### 2. Install Dependencies:
@@ -112,7 +111,7 @@ pip install -r requirements.txt
 Anda bisa menjalankan skrip Python yang memproses data, melatih model, dan mengevaluasi hasilnya dengan perintah berikut:
 
 ```bash
-[python forestfires_analysis.py](https://drive.google.com/file/d/1gV94vGcfF7K-cEIN6o5fVIk2w7fWhMOq/view?usp=sharing)
+https://drive.google.com/file/d/1gV94vGcfF7K-cEIN6o5fVIk2w7fWhMOq/view?usp=sharing
 ```
 
 ### 4. Unduh Dataset yang Telah Diproses:
